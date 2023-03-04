@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Profile = (props) => {
     const [myData, setMyData] = useState('');
-    
+
     useEffect (() => {
         if (localStorage.getItem('token')){
             props.setIsLoggedIn(true)
@@ -70,7 +70,7 @@ const Profile = (props) => {
         } catch (error) {
             console.log(error);
         }
-    }
+    }    
     
     return (
         <div>
@@ -106,6 +106,7 @@ const Profile = (props) => {
                                 <p className="postPrice">Price: {individualPost.price}</p>
                                 <p className="postWillDeliver">Will Deliver? {individualPost.willDeliver ? 'Yes' : 'No'}</p>
                                 <p className="description">Description: {individualPost.description}</p>
+                                <Link to={'/' + individualPost._id} >Open this post</Link>
                                 <button value={individualPost._id} onClick={deletePost} type='submit' > Delete this post</button>
                             </div>
                         )

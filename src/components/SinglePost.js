@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 const SinglePost = (props) => {
+    
     const {id} = useParams();
     const postList = props.postListProps;
     const chosenPost = postList.filter ((post) => {
@@ -10,7 +11,13 @@ const SinglePost = (props) => {
     })
     
     const truePost = chosenPost[0];
+
     const [message, setMessage] = useState('');
+
+    const [editTitle, setEditTitle] = useState(truePost.title);
+    const [editDescription, setEditDescription] = useState(truePost.description);
+    const [editPrice, setEditPrice] = useState(truePost.price);
+    const [editWillDeliver, setEditWillDeliver] = useState(truePost.willDeliver);
 
     const sendMessage = async () => {
 
@@ -73,6 +80,42 @@ const SinglePost = (props) => {
         setMessage('');
     }
 
+    async function editPost(postId) {
+        
+        if (truePost.author._id != myData._id){
+            alert("You cannot edit someone else's post!");
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                `https://strangers-things.herokuapp.com/api/2301-ftb-mt-web-ft/posts/${postId}`,
+                {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                    body: JSON.stringify({
+                        post: {
+                            title: editTitle,
+                            description: editDescription,
+                            price: editPrice,
+                            willDeliver: editWillDeliver
+                        },
+                    }),
+                }
+            );
+    
+            const data = await response.json();
+    
+            console.log(data)
+    
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return(
         <div className="singlePost"> 
             <Link to="/posts" >Click here to return to all posts</Link>
@@ -96,6 +139,36 @@ const SinglePost = (props) => {
                         </label>
                         <button type="submit">Send</button>
                     </form>
+                    <input
+                        type="text"
+                        placeholder="Edit post title here"
+                        value={editTitle}
+                        onChange={(event) => setEditTitle(event.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Edit post description here"
+                        value={editDescription}
+                        onChange={(event) => setEditDescription(event.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Edit post price here"
+                        value={editPrice}
+                        onChange={(event) => setEditPrice(event.target.value)}
+                    />
+                    <label> Edit Will Deliver
+                        <select type='text' placeholder="Will Deliver?" onChange={(event) => {setEditWillDeliver(event.target.value == 'true')}}>
+                            <option value='true'>True</option>
+                            <option value='false'>False</option>
+                        </select>
+                    </label>
+                    <button 
+                        onClick={() => editPost(truePost._id)}
+                        type="submit"
+                    >
+                        Submit Changes
+                    </button>
                 </div>
             }   
         </div>
