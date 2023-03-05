@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header, Posts, Login, Profile, CreateNewPost, SinglePost } from "./components";
 
 const appElement = document.getElementById("app")

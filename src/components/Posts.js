@@ -51,7 +51,7 @@ const Posts=(props) =>{
                 <div>
                     <input
                         type="text"
-                        placeholder="Search Name or Descr."
+                        placeholder="Search by name, price, desc. etc."
                         onChange={(event) => {
                         setSearchQuery(event.target.value);
                         }}

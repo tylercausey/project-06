@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -22,7 +21,7 @@ const Header = (props) => {
                     <div>
                         <Link to='/posts'> Posts </Link> 
                         <Link to='/profile'> &nbsp; Profile &nbsp; </Link>
-                        <button onClick={handleLogout}>Logout</button>
+                        <button onClick={handleLogout}> Logout </button>
                     </div>
                 }
             </div>
